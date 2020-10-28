@@ -1,0 +1,8 @@
+.venv
+.vscode
+__pycache__
+obj
+.idea
+.vs
+.env
+*exif*.exe

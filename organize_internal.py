@@ -2,6 +2,8 @@ import os
 import sys
 import argparse
 from scripts.command_media import organize_media
+from dotenv import load_dotenv
+load_dotenv()
 
 def str2bool(v):
     if isinstance(v, bool):
@@ -19,7 +21,7 @@ def create_parser():
         description="Tool to bulk organize files"
     )
 
-    exif_commands = ["media""]
+    exif_commands = ["media"]
     all_commands = exif_commands
 
     parser.add_argument("command", help="the command", choices=all_commands)

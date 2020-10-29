@@ -1,15 +1,13 @@
 # Command line media files organizer tool
 
-## Install
+## Prerequisite
 
-Make sure python is installed, in sys path variables and can execute .py files  
-Execute
-
+Installed Python 3.9, set up in sys path variables
+Installed pipenv
 ```cmd
 pip3 install pipenv
 ```
-
-Run `firstrun.bat` in Administrator CMD
+To set-up virtual environment for tool, run `firstrun.bat` in Administrator CMD
 
 ## **media** command (Win)
 

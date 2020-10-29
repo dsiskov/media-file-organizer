@@ -1,8 +1,7 @@
-from scripts.commands_organize import organize
 import os
 import sys
 import argparse
-from scripts.commands_media import organize_media
+from scripts.command_media import organize_media
 
 def str2bool(v):
     if isinstance(v, bool):
@@ -64,6 +63,3 @@ def main():
     error = f"{sys.exc_info()[1]}"
     print(error)
     sys.exit(1)
-
-if __name__ == "__main__":
-    main()

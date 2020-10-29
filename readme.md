@@ -3,6 +3,12 @@
 ## Install
 
 Make sure python is installed, in sys path variables and can execute .py files  
+Execute
+
+```cmd
+pip3 install pipenv
+```
+
 Run `firstrun.bat` in Administrator CMD
 
 ## **media** command

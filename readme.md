@@ -20,8 +20,13 @@ Download exif_tool from https://exiftool.org/, place in root folder `./tools`
 `--date`: process media structured by date  
 `--model`: process media structured by model
 
+**usage**:
+```python
+..\<media-folder-to-organize>\organize media -d
+```
+
 **tips**:
 When both used together, files are placed in folders by date, filenames include model name as prefix
 ```python
-org media -d -m
+..\<media-folder-to-organize>\organize media -d -m
 ```

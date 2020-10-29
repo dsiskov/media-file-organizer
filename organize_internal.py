@@ -63,3 +63,6 @@ def main():
     error = f"{sys.exc_info()[1]}"
     print(error)
     sys.exit(1)
+
+if __name__ == "__main__":
+    main()

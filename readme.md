@@ -1,4 +1,4 @@
-# Win command line file organizer tool
+# Command line media files organizer tool
 
 ## Install
 
@@ -11,17 +11,17 @@ pip3 install pipenv
 
 Run `firstrun.bat` in Administrator CMD
 
-## **media** command
+## **media** command (Win)
 
 **requirements**:  
-exif_tool from https://exiftool.org/, place in `./tools`
+Download exif_tool from https://exiftool.org/, place in root folder `./tools`
 
 **args**:  
 `--date`: process media structured by date  
 `--model`: process media structured by model
 
-**usage**:
-
+**tips**:
+When both used together, files are placed in folders by date, filenames include model name as prefix
 ```python
 org media -d -m
 ```

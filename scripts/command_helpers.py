@@ -3,7 +3,6 @@ import sys
 
 def run_command(args, capture_output=False, hide_command_args=False, encoding="utf-8"):
     try:
-        print(f'Execute: {args}')
         result = run(args, capture_output=capture_output, universal_newlines=True, encoding=encoding)
     except:
         error = f"{sys.exc_info()[1]}"

@@ -18,7 +18,7 @@ def str2bool(v):
 def create_parser():
 
     parser = argparse.ArgumentParser(
-        description="Tool to bulk organize files"
+        description="Tool to bulk organize media files"
     )
 
     exif_commands = ["media"]
@@ -33,7 +33,7 @@ def create_parser():
         nargs="?",
         const=True,
         default=False,
-        help=f"todo",
+        help=f"Using .env settings, copy/move media to output folder by date.\r\nCan be combined with --model",
     )
 
     parser.add_argument(
@@ -43,7 +43,7 @@ def create_parser():
         nargs="?",
         const=True,
         default=False,
-        help=f"todo",
+        help=f"Using .env settings, copy/move media to output folder by model.\r\nCan be combined with --date",
     )
 
     return parser

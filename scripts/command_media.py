@@ -9,7 +9,7 @@ from scripts.defaults import (
 from scripts.command_helpers import (
   run_command
 )
-from scripts.helpers import env_value_as_list, bcolors, print_colored
+from scripts.helpers import env_value_as_list, bcolors, print_colored, is_dir_empty, remove_dir
 from scripts.lib_exif import exif_organize_by_model, exif_organize_by_date
 import os
 from pathlib import Path
@@ -32,13 +32,13 @@ def handle_file_naming_prefix(file_naming, media_type, model=''):
   prefix_suffix = '_'
   try:
     prefix_suffix = os.getenv(ENV_PREFIX_SUFFIX_KEY)
-  except
+  except:
     print_colored('Prefix connector not found, will use "_"')
 
   model_to_lower = model.lower()
-  result = file_naming.replace(processing_file_naming_prefix, f'{model_to_lower}{prefix_suffix}', bcolors.INFO)
-  
-  for prefix_replacement in env_value_as_list(ENV_PREFIX_REPLACE_VALUES_KEY):
+  result = file_naming.replace(processing_file_naming_prefix, f'{model_to_lower}{prefix_suffix}')
+
+  for prefix_replacement in env_value_as_list(ENV_PREFIX_REPLACE_VALUES_KEY, False):
     split = prefix_replacement.split(env_keyvalue_separator)
     if not len(split) == 2:
       raise Exception(f'User setting (.env) key: {ENV_PREFIX_REPLACE_VALUES_KEY} is not defined properly')
@@ -76,9 +76,14 @@ def organize_media(args):
     file_types = env_value_as_list(f'{media_type}_FILE_TYPES')
 
     if args.model:
-      dir_by_model = exif_organize_by_model(args, input_path, output_dir[media_type], file_types);
-      
+
       if args.date:
+        temp_output_dir = os.path.join(output_dir[media_type], '_temp')
+        if not os.path.exists(temp_output_dir):
+          os.mkdir(temp_output_dir)
+
+        dir_by_model = exif_organize_by_model(args, input_path, temp_output_dir, file_types);
+      
         if not os.path.exists(dir_by_model):
           print_colored(f'There is no content to process in {dir_by_model}', bcolors.INFO, True)
 
@@ -88,6 +93,15 @@ def organize_media(args):
           
           file_naming_rule = handle_file_naming_prefix(os.getenv(ENV_PROCESSED_FILE_NAMING_RULE_KEY), media_type, model) + exif_file_naming_duplication_rule
           exif_organize_by_date(args, path, output_dir[media_type], file_types, file_naming_rule);
+
+        if is_dir_empty(temp_output_dir):
+          remove_dir(temp_output_dir)
+        else:
+          print_colored(f'There are unprocessed files placed in {temp_output_dir}', bcolors.INFO, True)
+
+      else:
+        dir_by_model = exif_organize_by_model(args, input_path, output_dir[media_type], file_types);
+
 
     elif args.date:
       file_naming_rule = handle_file_naming_prefix(os.getenv(ENV_PROCESSED_FILE_NAMING_RULE_KEY), media_type, '') + exif_file_naming_duplication_rule

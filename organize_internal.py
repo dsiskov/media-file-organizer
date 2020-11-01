@@ -46,6 +46,13 @@ def create_parser():
         help=f"Using .env settings, copy/move media to output folder by model.\r\nCan be combined with --date",
     )
 
+    parser.add_argument(
+        "-p",
+        "--prefix",
+        default="",
+        help=f"Prefix of processed file names. Default value is empty. Use MODEL to replace with extracted model value",
+    )
+
     return parser
 
 def execute_command(command, args):

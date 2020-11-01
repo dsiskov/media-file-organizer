@@ -1,7 +1,7 @@
 from scripts.defaults import (
   exif_file_naming_duplication_rule,
   processing_type_copy, 
-  processing_file_naming_prefix,
+  processing_file_model_prefix,
   ENV_PROCESSED_IMAGE_DIR_PATH_KEY, ENV_PROCESSED_VIDEO_DIR_PATH_KEY, ENV_PROCESSING_MEDIA_TYPES_KEY, ENV_IMAGE_FILE_TYPES_KEY, ENV_VIDEO_FILE_TYPES_KEY, ENV_PROCESSED_FILE_NAMING_RULE_KEY, ENV_PREFIX_REPLACE_VALUES_KEY, ENV_PREFIX_SUFFIX_KEY,
   all_env_keys, env_keyvalue_separator,
   keyword_image, keyword_video
@@ -28,15 +28,11 @@ def _initialize_output_dir(output_dirs):
       except:
         raise Exception(f'Please manually create directory {processed_dir_path}')
 
-def handle_file_naming_prefix(file_naming, media_type, model=''):
-  prefix_suffix = '_'
-  try:
-    prefix_suffix = os.getenv(ENV_PREFIX_SUFFIX_KEY)
-  except:
-    print_colored('Prefix connector not found, will use "_"')
-
+def handle_file_naming_prefix(file_naming, media_type, file_prefix, model=''):
   model_to_lower = model.lower()
-  result = file_naming.replace(processing_file_naming_prefix, f'{model_to_lower}{prefix_suffix}')
+  index_to_insert = file_naming.rfind('\\') + 1
+  naming_with_prefix = file_naming[:index_to_insert] + file_prefix + file_naming[index_to_insert:] 
+  result = naming_with_prefix.replace(processing_file_model_prefix, f'{model_to_lower}')
 
   for prefix_replacement in env_value_as_list(ENV_PREFIX_REPLACE_VALUES_KEY, False):
     split = prefix_replacement.split(env_keyvalue_separator)
@@ -91,7 +87,7 @@ def organize_media(args):
           model = str(path).split('\\')[-1]
           print_colored(f'Processing model: {model}', bcolors.INFO, True)
           
-          file_naming_rule = handle_file_naming_prefix(os.getenv(ENV_PROCESSED_FILE_NAMING_RULE_KEY), media_type, model) + exif_file_naming_duplication_rule
+          file_naming_rule = handle_file_naming_prefix(os.getenv(ENV_PROCESSED_FILE_NAMING_RULE_KEY), media_type, args.prefix, model) + exif_file_naming_duplication_rule
           exif_organize_by_date(args, path, output_dir[media_type], file_types, file_naming_rule);
 
         if is_dir_empty(temp_output_dir):
@@ -104,7 +100,7 @@ def organize_media(args):
 
 
     elif args.date:
-      file_naming_rule = handle_file_naming_prefix(os.getenv(ENV_PROCESSED_FILE_NAMING_RULE_KEY), media_type, '') + exif_file_naming_duplication_rule
+      file_naming_rule = handle_file_naming_prefix(os.getenv(ENV_PROCESSED_FILE_NAMING_RULE_KEY), media_type, args.prefix, '') + exif_file_naming_duplication_rule
       exif_organize_by_date(args, input_path, output_dir[media_type], file_types, file_naming_rule);
 
   print_colored('Finished successfully!', bcolors.STATUS, True)

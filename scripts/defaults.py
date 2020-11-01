@@ -11,7 +11,7 @@ exif_file_naming_duplication_rule = "%%-c.%%le"
 
 # env
 processing_type_copy = 'COPY'
-processing_file_naming_prefix = 'PREFIX'
+processing_file_model_prefix = 'MODEL'
 keyword_image = 'IMAGE'
 keyword_video = 'VIDEO'
 

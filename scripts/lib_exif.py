@@ -17,7 +17,7 @@ def _get_exif_initial_args(exe_path, force_move=False):
   return exif_command_args
 
 def _run_exif_command(args):
-  run_command(args, True)
+  run_command(args, False)
 
 def _get_exif_extra_parameters(file_types):
   extra_arguments = []

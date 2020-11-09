@@ -60,15 +60,17 @@ def organize_media(args):
   _validate(args)
 
   output_dir = { 
-    keyword_image: os.getenv(ENV_PROCESSED_IMAGE_DIR_PATH_KEY),
-    keyword_video: os.getenv(ENV_PROCESSED_VIDEO_DIR_PATH_KEY),  
+    keyword_image: args.output_dir_img if args.output_dir_img else os.getenv(ENV_PROCESSED_IMAGE_DIR_PATH_KEY),
+    keyword_video: args.output_dir_vid if args.output_dir_vid else os.getenv(ENV_PROCESSED_VIDEO_DIR_PATH_KEY),  
   }
   _initialize_output_dir(output_dir)
 
   for media_type in env_value_as_list(ENV_PROCESSING_MEDIA_TYPES_KEY):
     print_colored(f'Processing {media_type}s...', bcolors.INFO, True)
-
-    input_path = os.getcwd()
+    input_path = args.input_dir
+    if not input_path:
+      input_path = os.getcwd()
+    
     file_types = env_value_as_list(f'{media_type}_FILE_TYPES')
 
     if args.model:

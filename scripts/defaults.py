@@ -6,7 +6,7 @@ media_arg_date = "date"
 
 # exif
 exif_args_per_model = "-Filename<PATH/${model;}/%f%+c%E"
-exif_args_per_date = "-Filename<CreateDate"
+exif_args_per_date = "-Filename<"
 exif_file_naming_duplication_rule = "%%-c.%%le"
 
 # env

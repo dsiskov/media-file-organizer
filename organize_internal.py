@@ -53,6 +53,32 @@ def create_parser():
         help=f"Prefix of processed file names. Default value is empty. Use MODEL to replace with extracted model value",
     )
 
+    parser.add_argument(
+        "-t",
+        "--tag",
+        default="CreateDate",
+        choices=["FileModifyDate", "CreateDate"],
+        help=f"Tag used for processing file names. Default value is CreateDate",
+    )
+
+    parser.add_argument(
+        "--output_dir_img",
+        default="",
+        help=f"If not specified, used from .env",
+    )
+
+    parser.add_argument(
+        "--output_dir_vid",
+        default="",
+        help=f"If not specified, used from .env",
+    )
+
+    parser.add_argument(
+        "--input_dir",
+        default=None,
+        help=f"Full path to input directory. Current working directory used when not defined",
+    )
+
     return parser
 
 def execute_command(command, args):
